@@ -66,9 +66,20 @@ Or run directly: `python door_sensor.py`
 
 This assumes a "normally closed" reed switch that opens when the magnet moves away.
 
-## Webhook Notifications
+## Webhook Integration with Security Camera
 
-If you configure a webhook URL, the sensor will send JSON POST requests:
+The door sensor is integrated with the security camera web interface. The sensor sends door state updates via webhook to the camera server, which displays the status in real-time.
+
+### Setup
+1. Ensure the security camera server is running at `/home/avenged7x/Projects/python/networking/security_camera`
+2. Update `config.py` with the camera server's IP address:
+   ```python
+   WEBHOOK_URL = "http://http://192.168.1.100:5000/webhook"
+   ```
+3. The door status will appear on the camera web interface at `http://http://192.168.1.100:5000`
+
+### Webhook Format
+The sensor sends JSON POST requests to the webhook endpoint:
 
 ```json
 {
@@ -77,6 +88,11 @@ If you configure a webhook URL, the sensor will send JSON POST requests:
     "device": "pico_w_door_sensor"
 }
 ```
+
+The security camera web interface will display:
+- Current door state (OPEN/CLOSED)
+- Time since last update
+- Color-coded status (red for open, green for closed)
 
 ## Troubleshooting
 

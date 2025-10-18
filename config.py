@@ -13,8 +13,8 @@ LED_PIN = 25     # GPIO pin for status LED (25 is built-in LED)
 DEBOUNCE_TIME_MS = 50  # Milliseconds to debounce sensor readings
 
 # Notification Configuration (optional)
-WEBHOOK_URL = None  # Set to your webhook URL for notifications
-# Example: WEBHOOK_URL = "https://your-server.com/api/door-events"
+WEBHOOK_URL = "http://192.168.1.100:5000/webhook"  # Security camera webhook URL
+# Example: WEBHOOK_URL = "http://192.168.1.100:5000/webhook"
 
 # Device Configuration
 DEVICE_NAME = "pico_w_door_sensor"

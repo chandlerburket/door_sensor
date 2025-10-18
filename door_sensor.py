@@ -97,10 +97,10 @@ class DoorSensor:
                     time.ticks_diff(current_time, self.last_trigger) > self.debounce_time):
 
                     if current_state:
-                        print("=™ Door OPENED")
+                        print("=ÔøΩ Door OPENED")
                         self.led.on()
                     else:
-                        print("=™ Door CLOSED")
+                        print("=ÔøΩ Door CLOSED")
                         self.led.off()
 
                     # Send notification if webhook is configured
@@ -119,16 +119,21 @@ class DoorSensor:
 
 # Configuration and usage
 if __name__ == "__main__":
-    # Create door sensor instance
-    # Default: sensor on GPIO 16, LED on GPIO 25 (built-in LED)
-    sensor = DoorSensor(sensor_pin=16, led_pin=25)
-
-    # Configure WiFi credentials
-    sensor.wifi_ssid = "YOUR_WIFI_SSID"
-    sensor.wifi_password = "YOUR_WIFI_PASSWORD"
-
-    # Optional: Configure webhook for notifications
-    # sensor.webhook_url = "https://your-server.com/webhook"
+    # Try to import configuration
+    try:
+        import config
+        sensor = DoorSensor(sensor_pin=config.SENSOR_PIN, led_pin=config.LED_PIN)
+        sensor.wifi_ssid = config.WIFI_SSID
+        sensor.wifi_password = config.WIFI_PASSWORD
+        sensor.webhook_url = config.WEBHOOK_URL
+        sensor.debounce_time = config.DEBOUNCE_TIME_MS
+    except ImportError:
+        print("‚ö†Ô∏è  config.py not found, using defaults")
+        # Create door sensor instance with defaults
+        sensor = DoorSensor(sensor_pin=16, led_pin=25)
+        sensor.wifi_ssid = "YOUR_WIFI_SSID"
+        sensor.wifi_password = "YOUR_WIFI_PASSWORD"
+        # sensor.webhook_url = "http://your-server.com/webhook"
 
     # Start monitoring
     sensor.run()
