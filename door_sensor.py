@@ -83,6 +83,11 @@ class DoorSensor:
         # Connect to WiFi
         if self.connect_wifi():
             self.flash_led(2)
+            # Turn on LED to indicate connected and running
+            self.led.on()
+            print("LED ON - Connected to WiFi and monitoring")
+        else:
+            print("Failed to connect to WiFi - LED will remain off")
 
         print("Monitoring door state. Press Ctrl+C to stop.")
 
@@ -97,11 +102,9 @@ class DoorSensor:
                     time.ticks_diff(current_time, self.last_trigger) > self.debounce_time):
 
                     if current_state:
-                        print("=� Door OPENED")
-                        self.led.on()
+                        print("🚪 Door OPENED")
                     else:
-                        print("=� Door CLOSED")
-                        self.led.off()
+                        print("🚪 Door CLOSED")
 
                     # Send notification if webhook is configured
                     self.send_notification(current_state)
