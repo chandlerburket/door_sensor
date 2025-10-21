@@ -55,7 +55,7 @@ class DoorSensor:
 
         try:
             data = {
-                "door_state": "open" if door_state else "closed",
+                "door_state": "closed" if door_state else "open",
                 "timestamp": time.time(),
                 "device": "pico_w_door_sensor"
             }
