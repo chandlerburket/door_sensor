@@ -66,7 +66,7 @@ class DoorSensor:
                 data=json.dumps(data)
             )
             response.close()
-            print(f"Notification sent: door {'open' if door_state else 'closed'}")
+            print(f"Notification sent: door {'closed' if door_state else 'open'}")
         except Exception as e:
             print(f"Failed to send notification: {e}")
 
@@ -102,9 +102,9 @@ class DoorSensor:
                     time.ticks_diff(current_time, self.last_trigger) > self.debounce_time):
 
                     if current_state:
-                        print("🚪 Door OPENED")
+                        print("Door CLOSED")
                     else:
-                        print("🚪 Door CLOSED")
+                        print("Door OPENED")
 
                     # Send notification if webhook is configured
                     self.send_notification(current_state)
